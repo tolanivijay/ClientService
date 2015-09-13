@@ -6,6 +6,7 @@
 > Have hardcoded the directory name in DAOImpl for simplicity,ideally it would be
   passed as dependency from .properties considering directory paths for various envs would
   be different.Please change directory path after creating respective directory on local.
+> For simplicity have used S.O.P for logging 
   
   
  ---------------------------- Other Notes ------------------------------------------------
