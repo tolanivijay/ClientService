@@ -24,6 +24,12 @@ public class RegistrationService {
 	
 	private Encryptor encryptor;
 	
+	/**
+	 * Core Method which does the initial validation followed by registration
+	 * 
+	 * @param inputBO
+	 * @return
+	 */
 	public ServiceResponseBO validateAndRegister(RegistrationInputBO inputBO){
 		ServiceResponseBO responseBO =new ServiceResponseBO();
 		try{
@@ -55,6 +61,11 @@ public class RegistrationService {
 		return responseBO;
 	}
 	
+	/**
+	 * Simply replaces password with encrypted password
+	 * 
+	 * @param inputBO
+	 */
 	private void encrptPassWord(RegistrationInputBO inputBO){
 		inputBO.setPassword(encryptor.encryptString(inputBO.getPassword()));
 	}

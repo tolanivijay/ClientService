@@ -6,11 +6,21 @@ import com.client.service.jdo.RegistrationDO;
 import com.client.service.vo.RegistrationVO;
 
 /**
+ * Static Utils class used for stateless helper functions
+ * 
  * @author Vijay Tolani
  *
  */
 public class Utils {
 	
+	private Utils(){}
+	
+	/**
+	 * Converts to VO object given a DO object
+	 * 
+	 * @param detailsDO
+	 * @return
+	 */
 	public static RegistrationVO convertToVO(RegistrationDO detailsDO){
 		RegistrationVO detailsVO = null;
 		if (detailsDO == null){
@@ -28,6 +38,12 @@ public class Utils {
 		return detailsVO;
 	}
 	
+	/**
+	 * Converts to DO given a BO object
+	 * 
+	 * @param inputBO
+	 * @return
+	 */
 	public static RegistrationDO convertToDO(RegistrationInputBO inputBO){
 		RegistrationDO detailsDO = null;
 		if (inputBO !=null){

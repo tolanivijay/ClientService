@@ -10,12 +10,22 @@ import com.client.service.constants.Constants;
 import com.client.service.constants.ErrorConstants;
 
 /**
- * @author Vijay Tolani
  * Class used for all validation logic.
- *
+ * At the moment it is a standalone entity,but can be scaled for extension
+ * if validation becomes more extensive or complex
+ * 
+ * @author Vijay Tolani
+ * 
  */
 public class Validator {
 
+	/**
+	 * Performs all Service validations and return error String if any issue,
+	 * else null
+	 * 
+	 * @param inputBO
+	 * @return
+	 */
 	public static String getErrorIfInvalid(RegistrationInputBO inputBO){
 		String errorText = null;
 		if (isCollectionEmpty(Arrays.asList(inputBO.getConfirmPassword(),inputBO.getEmail(),inputBO.getFirstName(),
@@ -40,6 +50,14 @@ public class Validator {
 	}
 	
 	
+	/** 
+	 * Have used raw flavour of Calender. However JODA libs are available
+	 * for custom calculations around dates, which becomes an ideal chose if
+	 * requirement becomes any more complex.
+	 *   
+	 * @param birthDate
+	 * @return
+	 */
 	public static int getAgeInYears(Date birthDate){
 		int diffInYears= 0;
 		int diffInMonths =0;
@@ -65,6 +83,10 @@ public class Validator {
 		return diffInYears;
 	}
 	
+	/**
+	 * @param strCollection
+	 * @return
+	 */
 	private static boolean isCollectionEmpty(Collection<String> strCollection){
 		boolean isEmpty = false;
 		if (strCollection !=null){
@@ -77,6 +99,10 @@ public class Validator {
 		return isEmpty;
 	}
 	
+	/**
+	 * @param str
+	 * @return
+	 */
 	private static boolean isStringEmpty(String str){
 		boolean isEmpty = false;
 		if (str == null || Constants.EMPTY_STRING.equals(str.trim())){

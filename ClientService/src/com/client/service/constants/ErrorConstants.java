@@ -7,9 +7,13 @@ import java.util.List;
  * @author Vijay Tolani
  *
  */
-public class ErrorConstants {
+public final class ErrorConstants {
 	
- 
+	/**
+	 * No Instanciation allowed
+	 */
+	private ErrorConstants(){}
+	
 	public static final String DAO_GENERAL_FAILURE= "DAO_GENERAL_FAILURE";
 	
 	public static final String DAO_DUPE_EMAIL= "Email Already Present";

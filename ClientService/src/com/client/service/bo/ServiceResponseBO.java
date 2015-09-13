@@ -3,6 +3,7 @@ package com.client.service.bo;
 
 /**
  * @author Vijay Tolani
+ * Encapsulate Services response
  *
  */
 public class ServiceResponseBO {

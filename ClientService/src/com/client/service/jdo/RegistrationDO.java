@@ -1,9 +1,5 @@
-/**
- * 
- */
 package com.client.service.jdo;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 /**

@@ -1,0 +1,19 @@
+------------------------------- Assumptions ---------------------------------------------
+
+> Registration Service would be called from same java layer considering its input is a
+  Java object.If the Service needs to be exposed as Web-Service, will need to convert
+  input object to simple form params.
+> Have hardcoded the directory name in DAOImpl for simplicity,ideally it would be
+  passed as dependency from .properties considering directory paths for various envs would
+  be different.Please change directory path after creating respective directory on local.
+  
+  
+ ---------------------------- Other Notes ------------------------------------------------
+ 
+ > All Tests are available under the test package. A few tests might fail in the first run. 
+ > Have chosen JAXB and xml combination for parsing as it offers a simplistic approach
+   for marshalling-unmarshalling.
+ > Have used simple Calender API for deriving age in years,however we have JODA libs which
+   provides a comprehensive calculation API around age.If the calculations become any more
+   complex,it is highly recommended.
+     

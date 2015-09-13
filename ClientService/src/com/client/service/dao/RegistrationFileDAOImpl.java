@@ -38,6 +38,10 @@ public class RegistrationFileDAOImpl implements RegistrationDAO{
 	
 	
 
+	/* 
+	 * Performs the core business logic of persisting and all initial
+	 * validation of Email Dupe check.
+	 */
 	@Override
 	public DAOResponseBO persist(RegistrationDO registrationDO) {
 		DAOResponseBO responseBO =new DAOResponseBO();
@@ -61,6 +65,13 @@ public class RegistrationFileDAOImpl implements RegistrationDAO{
 		return responseBO;
 	}
 	
+	/** Fetches all records from persistent store and compares if the
+	 * email matches to the passed object
+	 * 
+	 * @param registrationDO
+	 * @return
+	 * 
+	 */
 	private boolean isEmailAlreadyPresent(RegistrationDO registrationDO){
 		boolean isPresent = false;
 		List<RegistrationVO> clientList =getAllPersistedDOs();
@@ -76,6 +87,10 @@ public class RegistrationFileDAOImpl implements RegistrationDAO{
 	}
 	
 	
+	/**
+	 * Fetches all records from persistent store
+	 * @return
+	 */
 	private List<RegistrationVO> getAllPersistedDOs(){
 		List<RegistrationVO> currentList = new ArrayList<RegistrationVO>();
 		File currentFolder = new File(dirLocation);
@@ -92,6 +107,12 @@ public class RegistrationFileDAOImpl implements RegistrationDAO{
 		return currentList;
 	}
 	
+	/**
+	 * Parses given file from dir location and converts it to visual object
+	 * 
+	 * @param file
+	 * @return
+	 */
 	private RegistrationVO convertToDO(File file){
 		RegistrationVO details = null;
 		if (file !=null){
@@ -114,27 +135,24 @@ public class RegistrationFileDAOImpl implements RegistrationDAO{
 		return details;
 	}
 	
-	public static void main(String[] args){
-		RegistrationDO detailsDO = new RegistrationDO();
-		detailsDO.setPassword("tempPass");
-		
-		
-		//detailsDO.setDateOfBirth(dateOfBirth);
-		detailsDO.setEmail("tempEmail@123.com");
-		detailsDO.setFirstName("Vijay");
-		detailsDO.setMobileNo("9930261880");
-		
-		RegistrationFileDAOImpl dao = new RegistrationFileDAOImpl();
-		System.out.println("persist is "+dao.persist(detailsDO));
-		
-	}
 	
+	/**
+	 * Performs persist to File System after persist
+	 * @param detailsVO
+	 * @return
+	 */
 	private boolean convertToXmlAndPersist(RegistrationVO detailsVO){
 		
 		return persistToNewFile(convertToXml(detailsVO));
 		
 	}
 	
+	/**
+	 * Converts to Xml
+	 * 
+	 * @param detailsVO
+	 * @return
+	 */
 	private String convertToXml(RegistrationVO detailsVO){
 		String xml=null;
 		try{
@@ -154,6 +172,12 @@ public class RegistrationFileDAOImpl implements RegistrationDAO{
 	
 	
 	
+	/**
+	 * For the given xml creates a new file
+	 * 
+	 * @param xml
+	 * @return
+	 */
 	private boolean persistToNewFile(String xml){
 		boolean isPersisted =false;
 		if (xml !=null){
@@ -167,8 +191,7 @@ public class RegistrationFileDAOImpl implements RegistrationDAO{
 					    writer.close();
 				}
 			}catch(Exception e){
-				System.out.println("Exception while persisting file");
-				e.printStackTrace();
+				System.out.println("Exception while persisting file "+ e);
 				isPersisted=false;
 			}
 			
@@ -176,6 +199,11 @@ public class RegistrationFileDAOImpl implements RegistrationDAO{
 		return isPersisted;
 	}
 	
+	/**
+	 * Helper method to fetch complete file URI
+	 * 
+	 * @return
+	 */
 	private String getCompleteFileUri(){
 		return dirLocation+System.currentTimeMillis() +fileExtension;
 	}

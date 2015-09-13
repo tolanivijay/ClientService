@@ -8,7 +8,12 @@ import java.util.List;
  * @author Vijay Tolani
  *
  */
-public class Constants {
+public final class Constants {
+	
+	/**
+	 * No Instanciation allowed
+	 */
+	private Constants(){}
 	
 	public static final String SERVICE_SUCCESS = "Success";
 	
