@@ -28,7 +28,7 @@ public class Validator {
 	 */
 	public static String getErrorIfInvalid(RegistrationInputBO inputBO){
 		String errorText = null;
-		if (isCollectionEmpty(Arrays.asList(inputBO.getConfirmPassword(),inputBO.getEmail(),inputBO.getFirstName(),
+		if (isAnyEntryEmpty(Arrays.asList(inputBO.getConfirmPassword(),inputBO.getEmail(),inputBO.getFirstName(),
 											inputBO.getPassword(),inputBO.getPreferedEmailFormat(),inputBO.getSurname())) || inputBO.getDateOfBirth() == null){
 			errorText= ErrorConstants.SERVICE_MANDATORY_FIELDS_NOT_PROVIDED;
 			return errorText;
@@ -84,15 +84,18 @@ public class Validator {
 	}
 	
 	/**
+	 * Returns true if any string in collection is empty
+	 * 
 	 * @param strCollection
 	 * @return
 	 */
-	private static boolean isCollectionEmpty(Collection<String> strCollection){
+	private static boolean isAnyEntryEmpty(Collection<String> strCollection){
 		boolean isEmpty = false;
 		if (strCollection !=null){
 			for (String str : strCollection){
 				if (isStringEmpty(str)){
 					isEmpty=true;
+					break;
 				}
 			}
 		}
@@ -100,6 +103,9 @@ public class Validator {
 	}
 	
 	/**
+	 * Returns true if the string passed is either null or empty 
+	 * i.e. contains only spaces
+	 * 
 	 * @param str
 	 * @return
 	 */
