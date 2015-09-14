@@ -1,13 +1,11 @@
 package com.client.service.validation;
 
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
 
 import com.client.service.bo.RegistrationInputBO;
 import com.client.service.constants.Constants;
 import com.client.service.constants.ErrorConstants;
+import com.client.service.util.Utils;
 
 /**
  * Class used for all validation logic.
@@ -28,7 +26,7 @@ public class Validator {
 	 */
 	public static String getErrorIfInvalid(RegistrationInputBO inputBO){
 		String errorText = null;
-		if (isAnyEntryEmpty(Arrays.asList(inputBO.getConfirmPassword(),inputBO.getEmail(),inputBO.getFirstName(),
+		if (Utils.isAnyEntryEmpty(Arrays.asList(inputBO.getConfirmPassword(),inputBO.getEmail(),inputBO.getFirstName(),
 											inputBO.getPassword(),inputBO.getPreferedEmailFormat(),inputBO.getSurname())) || inputBO.getDateOfBirth() == null){
 			errorText= ErrorConstants.SERVICE_MANDATORY_FIELDS_NOT_PROVIDED;
 			return errorText;
@@ -37,7 +35,7 @@ public class Validator {
 			errorText=ErrorConstants.SERVICE_PASSWORD_MISMATCH;
 			return errorText;
 		}
-		if (getAgeInYears(inputBO.getDateOfBirth()) < 18){
+		if (Utils.getAgeInYears(inputBO.getDateOfBirth()) < 18){
 			errorText=ErrorConstants.SERVICE_INVALID_AGE;
 			return errorText;
 		}
@@ -50,70 +48,5 @@ public class Validator {
 	}
 	
 	
-	/** 
-	 * Have used raw flavour of Calender. However JODA libs are available
-	 * for custom calculations around dates, which becomes an ideal chose if
-	 * requirement becomes any more complex.
-	 *   
-	 * @param birthDate
-	 * @return
-	 */
-	public static int getAgeInYears(Date birthDate){
-		int diffInYears= 0;
-		int diffInMonths =0;
-		int diffInDays = 0;
-		Calendar birthCalender = Calendar.getInstance();
-		birthCalender.setTimeInMillis(birthDate.getTime());
-		
-		Calendar currentCalender = Calendar.getInstance();
-		currentCalender.setTimeInMillis(System.currentTimeMillis());
-		
-		diffInYears = currentCalender.get(Calendar.YEAR) - birthCalender.get(Calendar.YEAR);
-		diffInMonths = currentCalender.get(Calendar.MONTH) - birthCalender.get(Calendar.MONTH);
-		diffInDays = currentCalender.get(Calendar.DATE) - birthCalender.get(Calendar.DATE);
-		
-		if (diffInMonths < 0){
-			diffInYears--;
-		}else if (diffInMonths == 0){
-			if (diffInDays < 0){
-				diffInYears--;
-			}
-		}
-		
-		return diffInYears;
-	}
 	
-	/**
-	 * Returns true if any string in collection is empty
-	 * 
-	 * @param strCollection
-	 * @return
-	 */
-	private static boolean isAnyEntryEmpty(Collection<String> strCollection){
-		boolean isEmpty = false;
-		if (strCollection !=null){
-			for (String str : strCollection){
-				if (isStringEmpty(str)){
-					isEmpty=true;
-					break;
-				}
-			}
-		}
-		return isEmpty;
-	}
-	
-	/**
-	 * Returns true if the string passed is either null or empty 
-	 * i.e. contains only spaces
-	 * 
-	 * @param str
-	 * @return
-	 */
-	private static boolean isStringEmpty(String str){
-		boolean isEmpty = false;
-		if (str == null || Constants.EMPTY_STRING.equals(str.trim())){
-			isEmpty=true;
-		}
-		return isEmpty;
-	}
 }
